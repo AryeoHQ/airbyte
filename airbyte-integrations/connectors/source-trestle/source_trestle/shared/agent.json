@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "ListAgentFirstName": {
+      "type": "string"
+    },
+    "ListAgentFullName": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "ListAgentFirstName",
+    "ListAgentFullName"
+  ]
+}

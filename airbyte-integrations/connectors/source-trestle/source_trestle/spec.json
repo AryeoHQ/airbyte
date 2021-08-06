@@ -1,0 +1,25 @@
+{
+  "documentationUrl": "https://docs.airbyte.io/integrations/sources/trestle",
+  "connectionSpecification": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Source Trestle Spec",
+    "type": "object",
+    "required": [
+      "client_id",
+      "client_secret"
+    ],
+    "additionalProperties": false,
+    "properties": {
+      "client_id": {
+        "type": "string",
+        "description": "Your username or client id. See the <a href=\"https://trestle-documentation.corelogic.com/index.html\">docs</a> for more information.",
+        "airbyte_secret": true
+      },
+      "client_secret": {
+        "type": "string",
+        "description": "Your password. See the <a href=\"https://trestle-documentation.corelogic.com/index.html\">docs</a> for more information.",
+        "airbyte_secret": true
+      }
+    }
+  }
+}
