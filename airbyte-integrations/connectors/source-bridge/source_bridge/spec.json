@@ -1,0 +1,27 @@
+{
+  "documentationUrl": "https://docs.airbyte.io/integrations/sources/bridge",
+  "connectionSpecification": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Source Bridge Spec",
+    "type": "object",
+    "required": [
+      "server_token"
+    ],
+    "additionalProperties": false,
+    "properties": {
+      "server_token": {
+        "type": "string",
+        "description": "Your server token, used as a bearer token. See the <a href=\"https://bridgedataoutput.com/docs/platform/Introduction\">docs</a> for more information.",
+        "airbyte_secret": true
+      },
+      "dataset": {
+        "type": "string",
+        "description": "The named dataset to use for this stream. See the <a href=\"https://bridgedataoutput.com/docs/platform/Introduction\">docs</a> for more information."
+      },
+      "brokerage_key": {
+        "type": "string",
+        "description": "The `ListOfficeKey` representing the brokerage to use for this stream. See the <a href=\"https://bridgedataoutput.com/docs/platform/Introduction\">docs</a> for more information."
+      }
+    }
+  }
+}

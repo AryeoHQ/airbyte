@@ -1,0 +1,36 @@
+{
+  "streams": [
+    {
+      "stream": {
+        "name": "bridge_stream",
+        "json_schema": {
+          "type": "object",
+          "properties": {
+            "@odata.context": {
+              "type": "string"
+            },
+            "@odata.count": {
+              "type": "number"
+            },
+            "value": {
+              "type": "array",
+              "items": {
+                "$ref": "./agent.json"
+              }
+            }
+          },
+          "required": [
+            "@odata.context",
+            "@odata.count",
+            "value"
+          ]
+        },
+        "supported_sync_modes": [
+          "full_refresh"
+        ]
+      },
+      "sync_mode": "full_refresh",
+      "destination_sync_mode": "overwrite"
+    }
+  ]
+}

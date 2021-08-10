@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "properties": {
+    "@odata.context": {
+      "type": "string"
+    },
+    "@odata.count": {
+      "type": "number"
+    },
+    "value": {
+      "type": "array",
+      "items": {
+        "$ref": "./agent.json"
+      }
+    }
+  },
+  "required": [
+    "@odata.context",
+    "@odata.count",
+    "value"
+  ]
+}
