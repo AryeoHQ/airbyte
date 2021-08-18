@@ -32,67 +32,22 @@ import urllib.parse
 from airbyte_cdk.sources import AbstractSource
 from airbyte_cdk.sources.streams import Stream
 from airbyte_cdk.sources.streams.http import HttpStream
-from airbyte_cdk.sources.streams.http.auth.core import HttpAuthenticator
+from airbyte_cdk.sources.streams.http.auth import TokenAuthenticator
 from datetime import datetime, timedelta
 
-class TrestleOauth2Authenticator(HttpAuthenticator):
-    def __init__(self, client_id: str, client_secret: str, scopes: List[str] = None):
-        self.token_refresh_endpoint = "https://api-prod.corelogic.com/trestle/oidc/connect/token"
-        self.client_secret = client_secret
-        self.client_id = client_id        
-        self.scopes = ["api"]
-
-        self._token_expiry_date = pendulum.now().subtract(hours=8)
-        self._access_token = None
-
-    def get_auth_header(self) -> Mapping[str, Any]:
-        return {"Authorization": f"Bearer {self.get_access_token()}"}
-
-    def get_access_token(self):
-        if self.token_has_expired():
-            t0 = pendulum.now()
-            token, expires_in = self.refresh_access_token()
-            self._access_token = token
-            self._token_expiry_date = t0.add(seconds=expires_in)
-
-        return self._access_token
-
-    def token_has_expired(self) -> bool:
-        return pendulum.now() > self._token_expiry_date
-
-    def get_refresh_request_body(self) -> Mapping[str, Any]:        
-        payload: MutableMapping[str, Any] = {
-            "grant_type": "client_credentials",
-            "client_id": self.client_id,
-            "client_secret": self.client_secret,            
-        }
-
-        if self.scopes:
-            payload["scopes"] = self.scopes
-
-        return payload
-
-    def refresh_access_token(self) -> Tuple[str, int]:
-        try:            
-            response = requests.request(method="POST", url=self.token_refresh_endpoint, data=self.get_refresh_request_body())
-            response.raise_for_status()
-            response_json = response.json()
-            return response_json["access_token"], response_json["expires_in"]
-        except Exception as e:
-            raise Exception(f"Error while refreshing access token: {e}") from e
-
-class TrestleStream(HttpStream):
-    url_base = "https://api-prod.corelogic.com/trestle/"
+class SparkStream(HttpStream):
+    url_base = "https://replication.sparkapi.com/"
     
     primary_key = None
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, user_agent: str, **kwargs):
+        super().__init__(**kwargs)    
+        self.user_agent = user_agent        
 
     def path(
         self, stream_state: Mapping[str, Any] = None, stream_slice: Mapping[str, Any] = None, next_page_token: Mapping[str, Any] = None
     ) -> str:
-        return "odata/Property"
+        return 'Reso/OData/Property'
 
     def request_params(
         self,
@@ -110,6 +65,13 @@ class TrestleStream(HttpStream):
 
         return params
 
+    def request_headers(
+        self, stream_state: Mapping[str, Any], stream_slice: Mapping[str, Any] = None, next_page_token: Mapping[str, Any] = None
+    ) -> Mapping[str, Any]:
+        return {
+            'X-SparkApi-User-Agent': self.user_agent            
+        }
+
     def parse_response(
         self,
         response: requests.Response,
@@ -124,26 +86,16 @@ class TrestleStream(HttpStream):
         if response_json.get("@odata.nextLink"):
             next_query_string = urllib.parse.urlsplit(response_json.get("@odata.nextLink")).query
             params = dict(urllib.parse.parse_qsl(next_query_string))
-            return {'$skip': params["$skip"]}
+            return {'$skiptoken': params["$skiptoken"]}
 
-class SourceTrestle(AbstractSource):
+class SourceSpark(AbstractSource):
     def check_connection(self, logger, config) -> Tuple[bool, any]:
-        authenticator = TrestleOauth2Authenticator(
-            client_id=config["client_id"],
-            client_secret=config["client_secret"]
-            )
-
-        try:
-            token = authenticator.get_access_token()
-            return True, None
-        except Exception as e:
-            return False, e
+        authenticator = TokenAuthenticator(config["access_token"])        
+        return True, None
 
     def streams(self, config: Mapping[str, Any]) -> List[Stream]:
-        authenticator = TrestleOauth2Authenticator(
-            client_id=config["client_id"],
-            client_secret=config["client_secret"]
-            )
-        args = {"authenticator": authenticator}
-      
-        return [TrestleStream(**args)]
+        authenticator = TokenAuthenticator(config["access_token"])
+        args = {"authenticator": authenticator, "user_agent": config["user_agent"]}
+        return [
+            SparkStream(**args)
+        ]

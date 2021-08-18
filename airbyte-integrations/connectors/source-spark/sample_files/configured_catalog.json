@@ -1,0 +1,32 @@
+{
+  "streams": [
+    {
+      "stream": {
+        "name": "spark_stream",
+        "json_schema": {
+          "type": "object",
+          "properties": {
+            "@odata.context": {
+              "type": "string"
+            },
+            "value": {
+              "type": "array",
+              "items": {
+                "$ref": "./agent.json"
+              }
+            }
+          },
+          "required": [
+            "@odata.context",
+            "value"
+          ]
+        },
+        "supported_sync_modes": [
+          "full_refresh"
+        ]
+      },
+      "sync_mode": "full_refresh",
+      "destination_sync_mode": "overwrite"
+    }
+  ]
+}

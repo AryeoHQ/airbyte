@@ -1,0 +1,25 @@
+{
+  "documentationUrl": "https://docs.airbyte.io/integrations/sources/spark",
+  "connectionSpecification": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Source Spark Spec",
+    "type": "object",
+    "required": [
+      "user_agent",
+      "access_token"
+    ],
+    "additionalProperties": false,
+    "properties": {
+      "user_agent": {
+        "type": "string",
+        "description": "Your user agent. See the <a href=\"http://sparkplatform.com/docs\">docs</a> for more information.",
+        "airbyte_secret": true
+      },
+      "access_token": {
+        "type": "string",
+        "description": "Your access token. See the <a href=\"http://sparkplatform.com/docs\">docs</a> for more information.",
+        "airbyte_secret": true
+      }
+    }
+  }
+}
