@@ -1,5 +1,5 @@
 {
-  "server_token": "{server_token}",
-  "dataset": "{dataset}",
-  "brokerage_key": "{brokerage_key}"
+  "server_token": "[INVALID_TOKEN]",
+  "dataset": "[INVALID_DATASET]",
+  "brokerage_key": "[INVALID_BROKERAGE_KEY]"
 }

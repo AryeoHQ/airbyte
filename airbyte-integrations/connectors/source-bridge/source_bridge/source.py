@@ -38,7 +38,7 @@ from datetime import datetime, timedelta
 class BridgeStream(HttpStream):
     url_base = "https://api.bridgedataoutput.com/api/v2/OData/"
     
-    primary_key = None
+    primary_key = 'ListingKey'
 
     def __init__(self, dataset: str, brokerage_key: str, **kwargs):
         super().__init__(**kwargs)
@@ -49,6 +49,13 @@ class BridgeStream(HttpStream):
         self, stream_state: Mapping[str, Any] = None, stream_slice: Mapping[str, Any] = None, next_page_token: Mapping[str, Any] = None
     ) -> str:
         return f'{self.dataset}/Property'
+
+    def next_page_token(self, response: requests.Response) -> Optional[Mapping[str, Any]]:
+        response_json = response.json()
+        if response_json.get("@odata.nextLink"):
+            next_query_string = urllib.parse.urlsplit(response_json.get("@odata.nextLink")).query
+            params = dict(urllib.parse.parse_qsl(next_query_string))
+            return {'$skip': params["$skip"]}
 
     def request_params(
         self,
@@ -74,19 +81,17 @@ class BridgeStream(HttpStream):
         stream_slice: Mapping[str, Any] = None,
         next_page_token: Mapping[str, Any] = None,
     ) -> Iterable[Mapping]:
-        return [response.json()]
-
-    def next_page_token(self, response: requests.Response) -> Optional[Mapping[str, Any]]:
-        response_json = response.json()
-        if response_json.get("@odata.nextLink"):
-            next_query_string = urllib.parse.urlsplit(response_json.get("@odata.nextLink")).query
-            params = dict(urllib.parse.parse_qsl(next_query_string))
-            return {'$skip': params["$skip"]}
+        json_response = response.json()
+        for record in json_response["value"]:
+            yield record
 
 class SourceBridge(AbstractSource):
     def check_connection(self, logger, config) -> Tuple[bool, any]:
-        authenticator = TokenAuthenticator(config["server_token"])        
-        return True, None
+        if config["server_token"].isalnum():
+            authenticator = TokenAuthenticator(config["server_token"])
+            return True, None
+        else:
+            return False, f"Server token should be alphanumeric."
 
     def streams(self, config: Mapping[str, Any]) -> List[Stream]:
         authenticator = TokenAuthenticator(config["server_token"])
