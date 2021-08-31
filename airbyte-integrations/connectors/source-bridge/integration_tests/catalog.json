@@ -1,39 +1,53 @@
 {
   "streams": [
     {
-      "name": "TODO fix this file",
-      "supported_sync_modes": ["full_refresh", "incremental"],
-      "source_defined_cursor": true,
-      "default_cursor_field": "column1",
-      "json_schema": {
-        "$schema": "http://json-schema.org/draft-07/schema#",
-        "type": "object",
-        "properties": {
-          "column1": {
-            "type": "string"
+      "stream": {
+        "name": "bridge_stream",
+        "json_schema": {
+          "type": "object",
+          "properties": {
+            "@odata.context": {
+              "type": "string"
+            },
+            "@odata.id": {
+              "type": "string"
+            },
+            "ListAgentFullName": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "ListingKey": {
+              "type": "string"
+            },
+            "BridgeModificationTimestamp": {
+              "type": "string",
+              "format": "date-time"
+            }
           },
-          "column2": {
-            "type": "number"
-          }
-        }
-      }
-    },
-    {
-      "name": "table1",
-      "supported_sync_modes": ["full_refresh", "incremental"],
-      "source_defined_cursor": false,
-      "json_schema": {
-        "$schema": "http://json-schema.org/draft-07/schema#",
-        "type": "object",
-        "properties": {
-          "column1": {
-            "type": "string"
-          },
-          "column2": {
-            "type": "number"
-          }
-        }
-      }
+          "required": [
+            "ListingKey"
+          ]
+        },
+        "supported_sync_modes": [
+          "full_refresh",
+          "incremental"
+        ],
+        "supported_destination_sync_modes": [
+          "overwrite",
+          "append_dedup"
+        ],
+        "source_defined_cursor": true,
+        "default_cursor_field": [
+          "updated_at"
+        ]
+      },
+      "sync_mode": "incremental",
+      "destination_sync_mode": "append_dedup",
+      "cursor_field": [
+        "updated_at"
+      ]
     }
   ]
 }
