@@ -57,7 +57,7 @@ class BridgeStream(HttpStream):
         next_page_token: Mapping[str, Any] = None,
     ) -> MutableMapping[str, Any]:
         params = {
-            '$select': 'ListAgentFullName',
+            '$select': 'ListAgentFullName,BridgeModificationTimestamp',
             '$filter': f'startswith(ListOfficeKey, \'{self.brokerage_key}\')',
             '$top': '200'
         }

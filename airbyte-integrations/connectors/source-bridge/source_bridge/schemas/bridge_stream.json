@@ -10,7 +10,7 @@
     "value": {
       "type": "array",
       "items": {
-        "$ref": "./agent.json"
+        "$ref": "./property.json"
       }
     }
   },

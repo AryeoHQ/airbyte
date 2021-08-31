@@ -12,9 +12,13 @@
     },
     "ListingKey": {
       "type": "string"
+    },
+    "BridgeModificationTimestamp": {
+      "type": "string",
+      "format": "date-time"
     }
   },
   "required": [
-    "ListAgentFullName"
+    "ListingKey"
   ]
 }
