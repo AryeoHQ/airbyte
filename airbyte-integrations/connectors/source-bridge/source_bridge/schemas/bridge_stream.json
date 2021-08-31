@@ -4,19 +4,24 @@
     "@odata.context": {
       "type": "string"
     },
-    "@odata.count": {
-      "type": "number"
+    "@odata.id": {
+      "type": "string"
     },
-    "value": {
-      "type": "array",
-      "items": {
-        "$ref": "./property.json"
-      }
+    "ListAgentFullName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListingKey": {
+      "type": "string"
+    },
+    "BridgeModificationTimestamp": {
+      "type": "string",
+      "format": "date-time"
     }
   },
   "required": [
-    "@odata.context",
-    "@odata.count",
-    "value"
+    "ListingKey"
   ]
 }
