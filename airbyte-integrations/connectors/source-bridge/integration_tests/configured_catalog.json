@@ -2,7 +2,7 @@
   "streams": [
     {
       "stream": {
-        "name": "bridge_stream",
+        "name": "properties",
         "json_schema": {
           "type": "object",
           "properties": {

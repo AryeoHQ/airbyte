@@ -22,7 +22,6 @@
 # SOFTWARE.
 #
 
-
 import pytest
 
 pytest_plugins = ("source_acceptance_test.plugin",)

@@ -22,7 +22,6 @@
 # SOFTWARE.
 #
 
-
 from .source import SourceBridge
 
 __all__ = ["SourceBridge"]

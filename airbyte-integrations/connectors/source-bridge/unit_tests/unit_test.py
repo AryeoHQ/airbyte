@@ -22,6 +22,9 @@
 # SOFTWARE.
 #
 
+from airbyte_cdk.sources.streams.http.auth import TokenAuthenticator
 
-def test_example_method():
-    assert True
+def test_single_token():
+    authenticator = TokenAuthenticator('123')
+    assert isinstance(authenticator, TokenAuthenticator)
+    assert '123' == authenticator._token
