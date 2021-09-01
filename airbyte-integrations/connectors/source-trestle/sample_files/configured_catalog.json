@@ -2,31 +2,40 @@
   "streams": [
     {
       "stream": {
-        "name": "trestle_stream",
+        "name": "properties",
         "json_schema": {
           "type": "object",
           "properties": {
-            "@odata.context": {
+            "ListAgentFullName": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "ListingKey": {
               "type": "string"
             },
-            "value": {
-              "type": "array",
-              "items": {
-                "$ref": "./agent.json"
-              }
+            "ModificationTimestamp": {
+              "type": "string",
+              "format": "date-time"
             }
           },
           "required": [
-            "@odata.context",
-            "value"
+            "ListingKey"
           ]
         },
         "supported_sync_modes": [
-          "full_refresh"
-        ]
+          "full_refresh",
+          "incremental"
+        ],
+        "supported_destination_sync_modes": [
+          "overwrite",
+          "append_dedup"
+        ],
+        "source_defined_cursor": true
       },
-      "sync_mode": "full_refresh",
-      "destination_sync_mode": "overwrite"
+      "sync_mode": "incremental",
+      "destination_sync_mode": "append_dedup"
     }
   ]
 }

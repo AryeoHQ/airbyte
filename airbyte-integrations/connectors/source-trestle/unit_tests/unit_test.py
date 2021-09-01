@@ -22,6 +22,11 @@
 # SOFTWARE.
 #
 
+from source_trestle.auth import TrestleOAuth2Authenticator
 
-def test_example_method():
-    assert True
+def test_single_token():
+    authenticator = TrestleOAuth2Authenticator('id', 'secret')
+    assert isinstance(authenticator, TrestleOAuth2Authenticator)
+    assert 'id' == authenticator.client_id
+    assert 'secret' == authenticator.client_secret
+    assert ['api'] == authenticator.scopes

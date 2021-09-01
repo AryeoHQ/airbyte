@@ -22,87 +22,112 @@
 # SOFTWARE.
 #
 
-from abc import ABC
-from typing import Any, Iterable, List, Mapping, MutableMapping, Optional, Tuple
-
-import pendulum
+import pytz
 import requests
 import urllib.parse
 
+from .auth import TrestleOAuth2Authenticator
+from abc import ABC
 from airbyte_cdk.sources import AbstractSource
 from airbyte_cdk.sources.streams import Stream
 from airbyte_cdk.sources.streams.http import HttpStream
-from airbyte_cdk.sources.streams.http.auth.core import HttpAuthenticator
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
+from typing import Any, Iterable, List, Mapping, MutableMapping, Optional, Tuple
 
-class TrestleOauth2Authenticator(HttpAuthenticator):
-    def __init__(self, client_id: str, client_secret: str, scopes: List[str] = None):
-        self.token_refresh_endpoint = "https://api-prod.corelogic.com/trestle/oidc/connect/token"
-        self.client_secret = client_secret
-        self.client_id = client_id        
-        self.scopes = ["api"]
+class TrestleStream(HttpStream, ABC):
+    """
+    Core stream class. Captures config values needed for all streams.
 
-        self._token_expiry_date = pendulum.now().subtract(hours=8)
-        self._access_token = None
-
-    def get_auth_header(self) -> Mapping[str, Any]:
-        return {"Authorization": f"Bearer {self.get_access_token()}"}
-
-    def get_access_token(self):
-        if self.token_has_expired():
-            t0 = pendulum.now()
-            token, expires_in = self.refresh_access_token()
-            self._access_token = token
-            self._token_expiry_date = t0.add(seconds=expires_in)
-
-        return self._access_token
-
-    def token_has_expired(self) -> bool:
-        return pendulum.now() > self._token_expiry_date
-
-    def get_refresh_request_body(self) -> Mapping[str, Any]:        
-        payload: MutableMapping[str, Any] = {
-            "grant_type": "client_credentials",
-            "client_id": self.client_id,
-            "client_secret": self.client_secret,            
-        }
-
-        if self.scopes:
-            payload["scopes"] = self.scopes
-
-        return payload
-
-    def refresh_access_token(self) -> Tuple[str, int]:
-        try:            
-            response = requests.request(method="POST", url=self.token_refresh_endpoint, data=self.get_refresh_request_body())
-            response.raise_for_status()
-            response_json = response.json()
-            return response_json["access_token"], response_json["expires_in"]
-        except Exception as e:
-            raise Exception(f"Error while refreshing access token: {e}") from e
-
-class TrestleStream(HttpStream):
+    This class is not intended to be used directly, subclass it instead.
+    """
     url_base = "https://api-prod.corelogic.com/trestle/"
-    
-    primary_key = None
+    datetime_format = '%Y-%m-%dT%H:%M:%S.%f%z'
 
     def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+        super(TrestleStream, self).__init__(**kwargs)
 
-    def path(
-        self, stream_state: Mapping[str, Any] = None, stream_slice: Mapping[str, Any] = None, next_page_token: Mapping[str, Any] = None
-    ) -> str:
-        return "odata/Property"
+class PaginatedTrestleStream(TrestleStream):
+    """
+    A paginated stream.
 
-    def request_params(
-        self,
-        stream_state: Mapping[str, Any],
-        stream_slice: Mapping[str, Any] = None,
-        next_page_token: Mapping[str, Any] = None,
-    ) -> MutableMapping[str, Any]:
+    This class is not intended to be used directly, subclass it instead.
+    """
+    data_key = 'value'
+    next_page_key = '@odata.nextLink'
+    skip_key = '$skip'
+
+    def next_page_token(self, response: requests.Response) -> Optional[Mapping[str, Any]]:
+        response_json = response.json()
+        if response_json.get(self.next_page_key):
+            next_query_string = urllib.parse.urlsplit(response_json.get(self.next_page_key)).query
+            params = dict(urllib.parse.parse_qsl(next_query_string))
+            return {self.skip_key: params[self.skip_key]}
+
+    def request_params(self, stream_state: Mapping[str, Any], stream_slice: Mapping[str, Any] = None, next_page_token: Mapping[str, Any] = None) -> MutableMapping[str, Any]:
+        if next_page_token:
+            params = {}
+            params.update(next_page_token)
+            return params
+        else:
+            return {}
+
+    def parse_response(self, response: requests.Response, stream_state: Mapping[str, Any], stream_slice: Mapping[str, Any] = None) -> Iterable[Mapping]:
+        json_response = response.json()
+        for record in json_response[self.data_key]:
+            yield record
+
+class IncrementalTrestleStream(PaginatedTrestleStream):
+    """
+    A paginated stream that can detect new or modified data using
+    a primary key and cursor (updated_at) field.
+
+    This class is not intended to be used directly, subclass it instead.
+    """
+    primary_key = None
+    cursor_field = None
+
+    def parse_response(self, response: requests.Response, stream_state: Mapping[str, Any], stream_slice: Mapping[str, Any] = None) -> Iterable[Mapping]:
+        json_response = response.json()
+        for record in json_response[self.data_key]:
+            if stream_state:
+                if record[self.cursor_field] >= stream_state.get(self.cursor_field):
+                    yield record
+            else:
+                yield record
+
+    def get_updated_state(self, current_stream_state: MutableMapping[str, Any], latest_record: Mapping[str, Any]) -> Mapping[str, any]:
+        """
+        This method is called once for each record returned from the API.
+        Compare each record's updated timestamp to the state's last synced timestamp.
+        If this is the first time we run a sync or no state was passed, current_stream_state will be None.
+        """
+        if current_stream_state is not None and self.cursor_field in current_stream_state:
+            current_parsed_date = datetime.strptime(current_stream_state[self.cursor_field], self.datetime_format)
+            latest_record_date = datetime.strptime(latest_record[self.cursor_field], self.datetime_format)
+            return {self.cursor_field: max(current_parsed_date, latest_record_date).strftime(self.datetime_format)}
+        else:
+            timezone = pytz.timezone("UTC")
+            today = timezone.localize(datetime.today())
+            return {self.cursor_field: today.strftime(self.datetime_format)}
+
+class Properties(IncrementalTrestleStream):
+    """
+    An incremental, paginated stream that captures real-estate properties from the Trestle API.
+    """
+    primary_key = 'ListingKey'
+    cursor_field = 'ModificationTimestamp'
+    page_size = '1000'
+
+    def path(self, stream_state: Mapping[str, Any] = None, stream_slice: Mapping[str, Any] = None, next_page_token: Mapping[str, Any] = None) -> str:
+        return 'odata/Property'
+
+    def request_params(self, stream_state: Mapping[str, Any], stream_slice: Mapping[str, Any] = None, next_page_token: Mapping[str, Any] = None) -> MutableMapping[str, Any]:
+        config_fields = 'ListAgentFullName,ListingKey'
+        select_fields = f'ModificationTimestamp,{config_fields}'
+
         params = {
-            '$select': 'ListAgentFullName',
-            '$top': '1000'
+            '$select': select_fields,
+            '$top': self.page_size
         }
 
         if next_page_token:
@@ -110,28 +135,9 @@ class TrestleStream(HttpStream):
 
         return params
 
-    def parse_response(
-        self,
-        response: requests.Response,
-        stream_state: Mapping[str, Any],
-        stream_slice: Mapping[str, Any] = None,
-        next_page_token: Mapping[str, Any] = None,
-    ) -> Iterable[Mapping]:
-        return [response.json()]
-
-    def next_page_token(self, response: requests.Response) -> Optional[Mapping[str, Any]]:
-        response_json = response.json()
-        if response_json.get("@odata.nextLink"):
-            next_query_string = urllib.parse.urlsplit(response_json.get("@odata.nextLink")).query
-            params = dict(urllib.parse.parse_qsl(next_query_string))
-            return {'$skip': params["$skip"]}
-
 class SourceTrestle(AbstractSource):
     def check_connection(self, logger, config) -> Tuple[bool, any]:
-        authenticator = TrestleOauth2Authenticator(
-            client_id=config["client_id"],
-            client_secret=config["client_secret"]
-            )
+        authenticator = TrestleOAuth2Authenticator(client_id=config["client_id"], client_secret=config["client_secret"])
 
         try:
             token = authenticator.get_access_token()
@@ -140,10 +146,9 @@ class SourceTrestle(AbstractSource):
             return False, e
 
     def streams(self, config: Mapping[str, Any]) -> List[Stream]:
-        authenticator = TrestleOauth2Authenticator(
-            client_id=config["client_id"],
-            client_secret=config["client_secret"]
-            )
+        authenticator = TrestleOAuth2Authenticator(client_id=config["client_id"], client_secret=config["client_secret"])
         args = {"authenticator": authenticator}
       
-        return [TrestleStream(**args)]
+        return [
+            Properties(**args)
+        ]
