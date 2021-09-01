@@ -6,11 +6,17 @@
         "json_schema": {
           "type": "object",
           "properties": {
-            "@odata.context": {
-              "type": "string"
+            "City": {
+              "type": [
+                "null",
+                "string"
+              ]
             },
-            "@odata.id": {
-              "type": "string"
+            "CityRegion": {
+              "type": [
+                "null",
+                "string"
+              ]
             },
             "ListAgentFullName": {
               "type": [
@@ -24,6 +30,84 @@
             "ModificationTimestamp": {
               "type": "string",
               "format": "date-time"
+            },
+            "PostalCity": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "PostalCode": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "PostalCodePlus4": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "StateOrProvince": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "StateRegion": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "StreetAdditionalInfo": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "StreetDirPrefix": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "StreetDirSuffix": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "StreetName": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "StreetNumber": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "StreetNumberNumeric": {
+              "type": [
+                "null",
+                "integer"
+              ]
+            },
+            "StreetSuffix": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "StreetSuffixModifier": {
+              "type": [
+                "null",
+                "string"
+              ]
             }
           },
           "required": [

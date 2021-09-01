@@ -121,8 +121,14 @@ class Properties(IncrementalBridgeStream):
         return f'{self.dataset}/Property'
 
     def request_params(self, stream_state: Mapping[str, Any], stream_slice: Mapping[str, Any] = None, next_page_token: Mapping[str, Any] = None) -> MutableMapping[str, Any]:
-        config_fields = 'ListAgentFullName'
-        select_fields = f'ModificationTimestamp,{config_fields}'
+        select_fields = (
+            f'{self.primary_key},{self.cursor_field},' +
+            "ListAgentFullName," +
+            "StreetAdditionalInfo,StreetDirPrefix,StreetDirSuffix,StreetName,StreetNumber,StreetNumberNumeric,StreetSuffix,StreetSuffixModifier," +
+            "StateOrProvince,StateRegion," +
+            "City,CityRegion," +
+            "PostalCity,PostalCode,PostalCodePlus4"
+        )
 
         params = {
             '$select': select_fields,
