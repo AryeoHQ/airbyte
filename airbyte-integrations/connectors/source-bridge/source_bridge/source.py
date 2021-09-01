@@ -40,7 +40,7 @@ class BridgeStream(HttpStream, ABC):
     url_base = "https://api.bridgedataoutput.com/api/v2/OData/"
 
     primary_key = 'ListingKey'
-    cursor_field = 'updated_at'
+    cursor_field = 'ModificationTimestamp'
 
     datetime_format = '%Y-%m-%dT%H:%M:%S.%fZ'
 
@@ -78,8 +78,11 @@ class BridgeStream(HttpStream, ABC):
         stream_slice: Mapping[str, Any] = None,
         next_page_token: Mapping[str, Any] = None,
     ) -> MutableMapping[str, Any]:
+        config_fields = 'ListAgentFullName'
+        select_fields = f'ModificationTimestamp,{config_fields}'
+
         params = {
-            '$select': 'ListAgentFullName,BridgeModificationTimestamp',
+            '$select': select_fields,
             '$filter': f'startswith(ListOfficeKey, \'{self.brokerage_key}\')',
             '$top': '200'
         }
@@ -98,7 +101,7 @@ class BridgeStream(HttpStream, ABC):
         json_response = response.json()
         for record in json_response["value"]:
             if stream_state:
-                if record['BridgeModificationTimestamp'] >= stream_state.get(self.cursor_field):
+                if record[self.cursor_field] >= stream_state.get(self.cursor_field):
                     yield record
             else:
                 yield record
@@ -111,12 +114,12 @@ class BridgeStream(HttpStream, ABC):
         # This method is called once for each record returned from the API.
         # Compare each record's timestamp to the cursor value in the current state.
         # If this is the first time we run a sync or no state was passed, current_stream_state will be None.
-        if current_stream_state is not None and 'updated_at' in current_stream_state:
-            current_parsed_date = datetime.strptime(current_stream_state['updated_at'], self.datetime_format)
-            latest_record_date = datetime.strptime(latest_record['BridgeModificationTimestamp'], self.datetime_format)
-            return {'updated_at': max(current_parsed_date, latest_record_date).strftime(self.datetime_format)}
+        if current_stream_state is not None and self.cursor_field in current_stream_state:
+            current_parsed_date = datetime.strptime(current_stream_state[self.cursor_field], self.datetime_format)
+            latest_record_date = datetime.strptime(latest_record[self.cursor_field], self.datetime_format)
+            return {self.cursor_field: max(current_parsed_date, latest_record_date).strftime(self.datetime_format)}
         else:
-            return {'updated_at': date.today().strftime(self.datetime_format)}
+            return {self.cursor_field: date.today().strftime(self.datetime_format)}
 
 class SourceBridge(AbstractSource):
     def check_connection(

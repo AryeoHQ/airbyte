@@ -16,7 +16,7 @@
     "ListingKey": {
       "type": "string"
     },
-    "BridgeModificationTimestamp": {
+    "ModificationTimestamp": {
       "type": "string",
       "format": "date-time"
     }
