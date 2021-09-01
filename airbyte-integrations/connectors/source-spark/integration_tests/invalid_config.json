@@ -1,4 +1,4 @@
 {
-  "user_agent": "{user_agent}",
-  "access_token": "{access_token}"
+  "user_agent": "[USER_AGENT]",
+  "access_token": "[ACCESS_TOKEN]"
 }

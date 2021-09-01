@@ -35,29 +35,106 @@ from airbyte_cdk.sources.streams.http import HttpStream
 from airbyte_cdk.sources.streams.http.auth import TokenAuthenticator
 from datetime import datetime, timedelta
 
-class SparkStream(HttpStream):
+class SparkStream(HttpStream, ABC):
+    """
+    Core stream class. Captures config values needed for all streams.
+
+    This class is not intended to be used directly, subclass it instead.
+    """
     url_base = "https://replication.sparkapi.com/"
-    
-    primary_key = None
+    datetime_format = '%Y-%m-%dT%H:%M:%SZ'
 
     def __init__(self, user_agent: str, **kwargs):
-        super().__init__(**kwargs)    
-        self.user_agent = user_agent        
+        super(SparkStream, self).__init__(**kwargs)
+        self.user_agent = user_agent
 
-    def path(
-        self, stream_state: Mapping[str, Any] = None, stream_slice: Mapping[str, Any] = None, next_page_token: Mapping[str, Any] = None
-    ) -> str:
+    def request_headers(
+        self, stream_state: Mapping[str, Any], stream_slice: Mapping[str, Any] = None, next_page_token: Mapping[str, Any] = None
+    ) -> Mapping[str, Any]:
+        return {
+            'X-SparkApi-User-Agent': self.user_agent            
+        }           
+
+class PaginatedSparkStream(SparkStream):
+    """
+    A paginated stream.
+
+    This class is not intended to be used directly, subclass it instead.
+    """
+    data_key = 'value'
+    next_page_key = '@odata.nextLink'
+    skip_key = '$skiptoken'
+
+    def next_page_token(self, response: requests.Response) -> Optional[Mapping[str, Any]]:
+        response_json = response.json()
+        if response_json.get(self.next_page_key):
+            next_query_string = urllib.parse.urlsplit(response_json.get(self.next_page_key)).query
+            params = dict(urllib.parse.parse_qsl(next_query_string))
+            return {self.skip_key: params[self.skip_key]}
+
+    def request_params(self, stream_state: Mapping[str, Any], stream_slice: Mapping[str, Any] = None, next_page_token: Mapping[str, Any] = None) -> MutableMapping[str, Any]:
+        if next_page_token:
+            params = {}
+            params.update(next_page_token)
+            return params
+        else:
+            return {}
+
+    def parse_response(self, response: requests.Response, stream_state: Mapping[str, Any], stream_slice: Mapping[str, Any] = None) -> Iterable[Mapping]:
+        json_response = response.json()
+        for record in json_response[self.data_key]:
+            yield record
+
+class IncrementalSparkStream(PaginatedSparkStream):
+    """
+    A paginated stream that can detect new or modified data using
+    a primary key and cursor (updated_at) field.
+
+    This class is not intended to be used directly, subclass it instead.
+    """
+    primary_key = None
+    cursor_field = None
+
+    def parse_response(self, response: requests.Response, stream_state: Mapping[str, Any], stream_slice: Mapping[str, Any] = None) -> Iterable[Mapping]:
+        json_response = response.json()
+        for record in json_response[self.data_key]:
+            if stream_state:
+                if record[self.cursor_field] >= stream_state.get(self.cursor_field):
+                    yield record
+            else:
+                yield record
+
+    def get_updated_state(self, current_stream_state: MutableMapping[str, Any], latest_record: Mapping[str, Any]) -> Mapping[str, any]:
+        """
+        This method is called once for each record returned from the API.
+        Compare each record's updated timestamp to the state's last synced timestamp.
+        If this is the first time we run a sync or no state was passed, current_stream_state will be None.
+        """
+        if current_stream_state is not None and self.cursor_field in current_stream_state:
+            current_parsed_date = datetime.strptime(current_stream_state[self.cursor_field], self.datetime_format)
+            latest_record_date = datetime.strptime(latest_record[self.cursor_field], self.datetime_format)
+            return {self.cursor_field: max(current_parsed_date, latest_record_date).strftime(self.datetime_format)}
+        else:
+            return {self.cursor_field: datetime.today().strftime(self.datetime_format)}
+
+class Properties(IncrementalSparkStream):
+    """
+    An incremental, paginated stream that captures real-estate properties from the Spark API.
+    """
+    primary_key = 'ListingKey'
+    cursor_field = 'ModificationTimestamp'
+    page_size = '1000'
+
+    def path(self, stream_state: Mapping[str, Any] = None, stream_slice: Mapping[str, Any] = None, next_page_token: Mapping[str, Any] = None) -> str:
         return 'Reso/OData/Property'
 
-    def request_params(
-        self,
-        stream_state: Mapping[str, Any],
-        stream_slice: Mapping[str, Any] = None,
-        next_page_token: Mapping[str, Any] = None,
-    ) -> MutableMapping[str, Any]:
+    def request_params(self, stream_state: Mapping[str, Any], stream_slice: Mapping[str, Any] = None, next_page_token: Mapping[str, Any] = None) -> MutableMapping[str, Any]:
+        config_fields = 'ListingKey,ListAgentFullName'
+        select_fields = f'ModificationTimestamp,{config_fields}'
+
         params = {
-            '$select': 'ListAgentFullName',
-            '$top': '1000'
+            '$select': select_fields,            
+            '$top': self.page_size
         }
 
         if next_page_token:
@@ -65,37 +142,18 @@ class SparkStream(HttpStream):
 
         return params
 
-    def request_headers(
-        self, stream_state: Mapping[str, Any], stream_slice: Mapping[str, Any] = None, next_page_token: Mapping[str, Any] = None
-    ) -> Mapping[str, Any]:
-        return {
-            'X-SparkApi-User-Agent': self.user_agent            
-        }
-
-    def parse_response(
-        self,
-        response: requests.Response,
-        stream_state: Mapping[str, Any],
-        stream_slice: Mapping[str, Any] = None,
-        next_page_token: Mapping[str, Any] = None,
-    ) -> Iterable[Mapping]:
-        return [response.json()]
-
-    def next_page_token(self, response: requests.Response) -> Optional[Mapping[str, Any]]:
-        response_json = response.json()
-        if response_json.get("@odata.nextLink"):
-            next_query_string = urllib.parse.urlsplit(response_json.get("@odata.nextLink")).query
-            params = dict(urllib.parse.parse_qsl(next_query_string))
-            return {'$skiptoken': params["$skiptoken"]}
-
 class SourceSpark(AbstractSource):
     def check_connection(self, logger, config) -> Tuple[bool, any]:
-        authenticator = TokenAuthenticator(config["access_token"])        
-        return True, None
+        if config["access_token"].isalnum():
+            authenticator = TokenAuthenticator(config["access_token"])
+            return True, None
+        else:
+            return False, f"Server token should be alphanumeric."
 
     def streams(self, config: Mapping[str, Any]) -> List[Stream]:
         authenticator = TokenAuthenticator(config["access_token"])
         args = {"authenticator": authenticator, "user_agent": config["user_agent"]}
+
         return [
-            SparkStream(**args)
+            Properties(**args)
         ]

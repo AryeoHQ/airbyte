@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "ListAgentFullName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListingKey": {
+      "type": "string"
+    },
+    "ModificationTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "ListingKey"
+  ]
+}
