@@ -22,19 +22,17 @@
 # SOFTWARE.
 #
 
-from abc import ABC
-from datetime import date
-from typing import Any, Iterable, List, Mapping, MutableMapping, Optional, Tuple
-
 import pendulum
 import requests
 import urllib.parse
 
+from abc import ABC
 from airbyte_cdk.sources import AbstractSource
 from airbyte_cdk.sources.streams import Stream
 from airbyte_cdk.sources.streams.http import HttpStream
 from airbyte_cdk.sources.streams.http.auth import TokenAuthenticator
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
+from typing import Any, Iterable, List, Mapping, MutableMapping, Optional, Tuple
 
 class BridgeStream(HttpStream, ABC):
     """
@@ -110,7 +108,7 @@ class IncrementalBridgeStream(PaginatedBridgeStream):
             latest_record_date = datetime.strptime(latest_record[self.cursor_field], self.datetime_format)
             return {self.cursor_field: max(current_parsed_date, latest_record_date).strftime(self.datetime_format)}
         else:
-            return {self.cursor_field: date.today().strftime(self.datetime_format)}
+            return {self.cursor_field: datetime.today().strftime(self.datetime_format)}
 
 class Properties(IncrementalBridgeStream):
     """
@@ -118,6 +116,7 @@ class Properties(IncrementalBridgeStream):
     """
     primary_key = 'ListingKey'
     cursor_field = 'ModificationTimestamp'
+    page_size = '200'
 
     def path(self, stream_state: Mapping[str, Any] = None, stream_slice: Mapping[str, Any] = None, next_page_token: Mapping[str, Any] = None) -> str:
         return f'{self.dataset}/Property'
@@ -129,7 +128,7 @@ class Properties(IncrementalBridgeStream):
         params = {
             '$select': select_fields,
             '$filter': f'startswith(ListOfficeKey, \'{self.brokerage_key}\')',
-            '$top': '200'
+            '$top': self.page_size
         }
 
         if next_page_token:
