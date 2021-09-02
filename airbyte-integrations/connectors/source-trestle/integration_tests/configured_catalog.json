@@ -3,27 +3,7 @@
     {
       "stream": {
         "name": "properties",
-        "json_schema": {
-          "type": "object",
-          "properties": {
-            "ListAgentFullName": {
-              "type": [
-                "null",
-                "string"
-              ]
-            },
-            "ListingKey": {
-              "type": "string"
-            },
-            "ModificationTimestamp": {
-              "type": "string",
-              "format": "date-time"
-            }
-          },
-          "required": [
-            "ListingKey"
-          ]
-        },
+        "json_schema": {},
         "supported_sync_modes": [
           "full_refresh",
           "incremental"

@@ -1,6 +1,482 @@
 {
   "type": "object",
   "properties": {
+    "AboveGradeFinishedArea": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "AboveGradeFinishedAreaSource": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "AboveGradeFinishedAreaUnits": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "AccessCode": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "AdditionalParcelsDescription": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "AdditionalParcelsYN": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "AnchorsCoTenants": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ArchitecturalStyle": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "AssociationName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "AssociationName2": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "AssociationPhone": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "AssociationPhone2": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "AttachedGarageYN": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "AvailabilityDate": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "format": "date"
+    },
+    "Basement": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "BathroomsFull": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "BathroomsHalf": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "BathroomsThreeQuarter": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "BathroomsTotalInteger": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "BedroomsPossible": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "BedroomsTotal": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "BelowGradeFinishedArea": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "BelowGradeFinishedAreaSource": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BelowGradeFinishedAreaUnits": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuilderModel": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuilderName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuildingAreaSource": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuildingAreaTotal": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "BuildingAreaUnits": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuildingFeatures": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "BuildingName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BusinessName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerAgencyCompensation": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerAgencyCompensationType": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerAgentAOR": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerAgentDesignation": {
+      "type": [
+        "null",
+        "array"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "BuyerAgentDirectPhone": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerAgentEmail": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerAgentFax": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerAgentFirstName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerAgentFullName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerAgentHomePhone": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerAgentKey": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerAgentKeyNumeric": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "BuyerAgentLastName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerAgentMiddleName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerAgentMlsId": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerAgentMobilePhone": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerAgentNamePrefix": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerAgentNameSuffix": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerAgentOfficePhone": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerAgentOfficePhoneExt": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerAgentPager": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerAgentPreferredPhone": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerAgentPreferredPhoneExt": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerAgentStateLicense": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerAgentTollFreePhone": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerAgentURL": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerAgentVoiceMail": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerAgentVoiceMailExt": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerFinancing": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "BuyerOfficeAOR": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerOfficeEmail": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerOfficeFax": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerOfficeKey": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerOfficeKeyNumeric": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "BuyerOfficeMlsId": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerOfficeName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerOfficePhone": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerOfficePhoneExt": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerOfficeURL": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "BuyerTeamKeyNumeric": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "CableTvExpense": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "CapRate": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "CarportYN": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "CarrierRoute": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
     "City": {
       "type": [
         "null",
@@ -13,18 +489,2043 @@
         "string"
       ]
     },
+    "CloseDate": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "format": "date"
+    },
+    "ClosePrice": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "CoBuyerAgentAOR": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoBuyerAgentDesignation": {
+      "type": [
+        "null",
+        "array"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "CoBuyerAgentDirectPhone": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoBuyerAgentEmail": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoBuyerAgentFax": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoBuyerAgentFirstName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoBuyerAgentFullName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoBuyerAgentHomePhone": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoBuyerAgentKey": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoBuyerAgentKeyNumeric": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "CoBuyerAgentLastName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoBuyerAgentMiddleName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoBuyerAgentMlsId": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoBuyerAgentMobilePhone": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoBuyerAgentNamePrefix": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoBuyerAgentNameSuffix": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoBuyerAgentOfficePhone": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoBuyerAgentOfficePhoneExt": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoBuyerAgentPager": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoBuyerAgentPreferredPhone": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoBuyerAgentPreferredPhoneExt": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoBuyerAgentStateLicense": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoBuyerAgentTollFreePhone": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoBuyerAgentURL": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoBuyerAgentVoiceMail": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoBuyerAgentVoiceMailExt": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoBuyerOfficeAOR": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoBuyerOfficeKey": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoBuyerOfficeKeyNumeric": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "CoBuyerOfficeMlsId": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoListAgentAOR": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoListAgentDesignation": {
+      "type": [
+        "null",
+        "array"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "CoListAgentDirectPhone": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoListAgentEmail": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoListAgentFax": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoListAgentFirstName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoListAgentFullName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoListAgentHomePhone": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoListAgentKey": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoListAgentKeyNumeric": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "CoListAgentLastName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoListAgentMiddleName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoListAgentMlsId": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoListAgentMobilePhone": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoListAgentNamePrefix": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoListAgentNameSuffix": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoListAgentOfficePhone": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoListAgentOfficePhoneExt": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoListAgentPager": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoListAgentPreferredPhone": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoListAgentPreferredPhoneExt": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoListAgentStateLicense": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoListAgentTollFreePhone": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoListAgentURL": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoListAgentVoiceMail": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoListAgentVoiceMailExt": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoListOfficeAOR": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoListOfficeKey": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoListOfficeKeyNumeric": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "CoListOfficeMlsId": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CommonWalls": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "CommunityFeatures": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "ConcessionsAmount": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "ConcessionsComments": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ConstructionMaterials": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "ContinentRegion": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "Contingency": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ContingentDate": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "format": "date"
+    },
+    "ContractStatusChangeDate": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "format": "date"
+    },
+    "Country": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CountryRegion": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CountyOrParish": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CoveredSpaces": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "CropsIncludedYN": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "CrossStreet": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "CultivatedArea": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "CumulativeDaysOnMarket": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "CurrentFinancing": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "DaysOnMarket": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "DevelopmentStatus": {
+      "type": [
+        "null",
+        "array"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "Directions": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "Disclosures": {
+      "type": [
+        "null",
+        "array"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "DistanceToBusComments": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "DistanceToBusNumeric": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "DistanceToBusUnits": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "DistanceToElectricComments": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "DistanceToElectricNumeric": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "DistanceToElectricUnits": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "DistanceToFreewayComments": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "DistanceToFreewayNumeric": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "DistanceToFreewayUnits": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "DistanceToGasComments": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "DistanceToGasNumeric": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "DistanceToGasUnits": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "DistanceToPhoneServiceComments": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "DistanceToPlaceofWorshipComments": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "DistanceToPlaceofWorshipNumeric": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "DistanceToPlaceofWorshipUnits": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "DistanceToSchoolBusComments": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "DistanceToSchoolBusNumeric": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "DistanceToSchoolBusUnits": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "DistanceToSchoolsComments": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "DistanceToSchoolsNumeric": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "DistanceToSchoolsUnits": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "DistanceToSewerComments": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "DistanceToSewerNumeric": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "DistanceToSewerUnits": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "DistanceToShoppingComments": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "DistanceToShoppingNumeric": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "DistanceToShoppingUnits": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "DistanceToStreetComments": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "DistanceToStreetUnits": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "DistanceToWaterComments": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "DistanceToWaterNumeric": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "DistanceToWaterUnits": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "DocumentsCount": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "DOH1": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "DOH2": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "DOH3": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "DoorFeatures": {
+      "type": [
+        "null",
+        "array"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "DualVariableCompensationYN": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "ElectricExpense": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "ElectricOnPropertyYN": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "ElementarySchool": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "Elevation": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "ElevationUnits": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "EntryLevel": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "EntryLocation": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "Exclusions": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ExistingLeaseType": {
+      "type": [
+        "null",
+        "array"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "FarmCreditServiceInclYN": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "FarmLandAreaSource": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "FarmLandAreaUnits": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "FinancialDataSource": {
+      "type": [
+        "null",
+        "array"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "FoundationArea": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "FrontageLength": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "FrontageType": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "FuelExpense": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "Furnished": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "FurnitureReplacementExpense": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "GarageSpaces": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "GarageYN": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "GardenerExpense": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "GrazingPermitsBlmYN": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "GrazingPermitsForestServiceYN": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "GrazingPermitsPrivateYN": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "GreenEnergyEfficient": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "GreenEnergyGeneration": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "GreenIndoorAirQuality": {
+      "type": [
+        "null",
+        "array"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "GreenLocation": {
+      "type": [
+        "null",
+        "array"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "GreenSustainability": {
+      "type": [
+        "null",
+        "array"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "GreenWaterConservation": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "GrossIncome": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "GrossScheduledIncome": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "HabitableResidenceYN": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "HighSchool": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "HighSchoolDistrict": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "HomeWarrantyYN": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "HorseAmenities": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "HorseYN": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "HoursDaysOfOperation": {
+      "type": [
+        "null",
+        "array"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "HoursDaysOfOperationDescription": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "Inclusions": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "IncomeIncludes": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "InsuranceExpense": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "InternetAddressDisplayYN": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "InternetAutomatedValuationDisplayYN": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "InternetConsumerCommentYN": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "InternetEntireListingDisplayYN": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "IrrigationSource": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "IrrigationWaterRightsAcres": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "IrrigationWaterRightsYN": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "LaborInformation": {
+      "type": [
+        "null",
+        "array"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "LandLeaseAmount": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "LandLeaseAmountFrequency": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "LandLeaseExpirationDate": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "format": "date"
+    },
+    "LandLeaseYN": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "Latitude": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "LeasableArea": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "LeasableAreaUnits": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "LeaseAmount": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "LeaseAmountFrequency": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "LeaseAssignableYN": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "LeaseConsideredYN": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "LeaseExpiration": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "format": "date"
+    },
+    "LeaseRenewalCompensation": {
+      "type": [
+        "null",
+        "array"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "LeaseRenewalOptionYN": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "License1": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "License2": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "License3": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "LicensesExpense": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "ListAgentAOR": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListAgentDesignation": {
+      "type": [
+        "null",
+        "array"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "ListAgentDirectPhone": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListAgentEmail": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListAgentFax": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListAgentFirstName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
     "ListAgentFullName": {
       "type": [
         "null",
         "string"
       ]
     },
+    "ListAgentHomePhone": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListAgentKey": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListAgentKeyNumeric": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "ListAgentLastName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListAgentMiddleName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListAgentMlsId": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListAgentMobilePhone": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListAgentNamePrefix": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListAgentNameSuffix": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListAgentOfficePhone": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListAgentOfficePhoneExt": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListAgentPager": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListAgentPreferredPhone": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListAgentPreferredPhoneExt": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListAgentStateLicense": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListAgentTollFreePhone": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListAgentURL": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListAgentVoiceMail": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListAgentVoiceMailExt": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListAOR": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListingAgreement": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListingContractDate": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "format": "date"
+    },
+    "ListingId": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
     "ListingKey": {
-      "type": "string"
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListingTerms": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "ListOfficeAOR": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListOfficeEmail": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListOfficeFax": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListOfficeKey": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListOfficeKeyNumeric": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "ListOfficeMlsId": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListOfficeName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListOfficePhone": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListOfficePhoneExt": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListOfficeURL": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ListPrice": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "ListPriceLow": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "ListTeamKeyNumeric": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "LivingArea": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "LockBoxLocation": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "LockBoxSerialNumber": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "LockBoxType": {
+      "type": [
+        "null",
+        "array"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "Longitude": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "LotDimensionsSource": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "LotFeatures": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "LotSizeAcres": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "LotSizeArea": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "LotSizeSource": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "LotSizeSquareFeet": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "LotSizeUnits": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "MainLevelBathrooms": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "MainLevelBedrooms": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "MaintenanceExpense": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "MajorChangeTimestamp": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "MajorChangeType": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "Make": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ManagerExpense": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "MapCoordinate": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "MapCoordinateSource": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "MapURL": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "MiddleOrJuniorSchool": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "MLSAreaMajor": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "MLSAreaMinor": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "MlsStatus": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "MobileDimUnits": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "MobileHomeRemainsYN": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "Model": {
+      "type": [
+        "null",
+        "string"
+      ]
     },
     "ModificationTimestamp": {
-      "type": "string",
+      "type": [
+        "null",
+        "string"
+      ],
       "format": "date-time"
+    },
+    "NetOperatingIncome": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "NewConstructionYN": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "NewTaxesExpense": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "NumberOfBuildings": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "NumberOfFullTimeEmployees": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "NumberOfLots": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "NumberOfPads": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "NumberOfPartTimeEmployees": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "NumberOfSeparateElectricMeters": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "NumberOfSeparateGasMeters": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "NumberOfSeparateWaterMeters": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "NumberOfUnitsInCommunity": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "NumberOfUnitsLeased": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "NumberOfUnitsMoMo": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "NumberOfUnitsVacant": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "OccupantName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "OccupantPhone": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "OccupantType": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "OffMarketDate": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "format": "date"
+    },
+    "OnMarketDate": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "format": "date"
+    },
+    "OpenParkingSpaces": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "OpenParkingYN": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "OperatingExpense": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "OperatingExpenseIncludes": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "OriginalEntryTimestamp": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "OriginalListPrice": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "OriginatingSystemID": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "OriginatingSystemKey": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "OriginatingSystemName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "OtherEquipment": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "OtherExpense": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "OtherParking": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "OtherStructures": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "OwnerName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "OwnerPays": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "OwnerPhone": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "Ownership": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "OwnershipType": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ParcelNumber": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ParkingTotal": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "ParkManagerName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ParkManagerPhone": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "PastureArea": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "PendingTimestamp": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "PestControlExpense": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "PetsAllowed": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "PhotosChangeTimestamp": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "PhotosCount": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "PoolExpense": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "Possession": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
     },
     "PostalCity": {
       "type": [
@@ -38,7 +2539,239 @@
         "string"
       ]
     },
-    "PostalCodePlus4": {
+    "PreviousListPrice": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "PriceChangeTimestamp": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "PrivateRemarks": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ProfessionalManagementExpense": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "PropertyCondition": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "PropertyType": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "PublicRemarks": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "PublicSurveyRange": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "PublicSurveySection": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "PublicSurveyTownship": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "PurchaseContractDate": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "format": "date"
+    },
+    "RangeArea": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "RentControlYN": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "RoadFrontageType": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "RoadResponsibility": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "RoadSurfaceType": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "RoomsTotal": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "RVParkingDimensions": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "SeatingCapacity": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "SecurityFeatures": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "SerialU": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "SerialX": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "SerialXX": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "Sewer": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "ShowingContactName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ShowingContactPhone": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ShowingContactPhoneExt": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ShowingContactType": {
+      "type": [
+        "null",
+        "array"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "ShowingInstructions": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "SignOnPropertyYN": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "SourceSystemID": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "SourceSystemKey": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "SourceSystemName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "SpaYN": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "StandardStatus": {
       "type": [
         "null",
         "string"
@@ -56,6 +2789,12 @@
         "string"
       ]
     },
+    "StatusChangeTimestamp": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
     "StreetAdditionalInfo": {
       "type": [
         "null",
@@ -63,12 +2802,6 @@
       ]
     },
     "StreetDirPrefix": {
-      "type": [
-        "null",
-        "string"
-      ]
-    },
-    "StreetDirSuffix": {
       "type": [
         "null",
         "string"
@@ -89,7 +2822,7 @@
     "StreetNumberNumeric": {
       "type": [
         "null",
-        "integer"
+        "number"
       ]
     },
     "StreetSuffix": {
@@ -98,10 +2831,318 @@
         "string"
       ]
     },
-    "StreetSuffixModifier": {
+    "StructureType": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "SubAgencyCompensation": {
       "type": [
         "null",
         "string"
+      ]
+    },
+    "SubAgencyCompensationType": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "SubdivisionName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "SuppliesExpense": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "SyndicateTo": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "SyndicationRemarks": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "TaxAnnualAmount": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "TaxAssessedValue": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "TaxBlock": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "TaxBookNumber": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "TaxLegalDescription": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "TaxLot": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "TaxMapNumber": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "TaxOtherAnnualAssessmentAmount": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "TaxParcelLetter": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "TaxStatusCurrent": {
+      "type": [
+        "null",
+        "array"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "TaxTract": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "TaxYear": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "TenantPays": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "TotalActualRent": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "Township": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "TransactionBrokerCompensation": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "TransactionBrokerCompensationType": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "TrashExpense": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "UnitNumber": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "UnitsFurnished": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "UnparsedAddress": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "Utilities": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "VacancyAllowance": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "VacancyAllowanceRate": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "Vegetation": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "VideosCount": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "ViewYN": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "VirtualTourURLUnbranded": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "WalkScore": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "WaterfrontFeatures": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "WaterSewerExpense": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "WaterSource": {
+      "type": [
+        "null",
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "WithdrawnDate": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "format": "date"
+    },
+    "WoodedArea": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "WorkmansCompensationExpense": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "YearBuilt": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "YearBuiltEffective": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "YearBuiltSource": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "YearEstablished": {
+      "type": [
+        "null",
+        "number"
+      ]
+    },
+    "YearsCurrentOwner": {
+      "type": [
+        "null",
+        "number"
       ]
     }
   },

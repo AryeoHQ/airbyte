@@ -71,12 +71,14 @@ class PaginatedSparkStream(SparkStream):
             return {self.skip_key: params[self.skip_key]}
 
     def request_params(self, stream_state: Mapping[str, Any], stream_slice: Mapping[str, Any] = None, next_page_token: Mapping[str, Any] = None) -> MutableMapping[str, Any]:
+        params = {                    
+            '$top': self.page_size
+        }
+
         if next_page_token:
-            params = {}
             params.update(next_page_token)
-            return params
-        else:
-            return {}
+
+        return params
 
     def parse_response(self, response: requests.Response, stream_state: Mapping[str, Any], stream_slice: Mapping[str, Any] = None) -> Iterable[Mapping]:
         json_response = response.json()
@@ -121,27 +123,7 @@ class Properties(IncrementalSparkStream):
     """
     primary_key = 'ListingKey'
     cursor_field = 'ModificationTimestamp'
-    page_size = '1000'
+    page_size = '50'
 
     def path(self, stream_state: Mapping[str, Any] = None, stream_slice: Mapping[str, Any] = None, next_page_token: Mapping[str, Any] = None) -> str:
         return 'Reso/OData/Property'
-
-    def request_params(self, stream_state: Mapping[str, Any], stream_slice: Mapping[str, Any] = None, next_page_token: Mapping[str, Any] = None) -> MutableMapping[str, Any]:
-        select_fields = (
-            f'{self.primary_key},{self.cursor_field},' +
-            "ListAgentFullName," +
-            "StreetAdditionalInfo,StreetDirPrefix,StreetDirSuffix,StreetName,StreetNumber,StreetNumberNumeric,StreetSuffix,StreetSuffixModifier," +
-            "StateOrProvince,StateRegion," +
-            "City,CityRegion," +
-            "PostalCity,PostalCode,PostalCodePlus4"
-        )
-
-        params = {
-            '$select': select_fields,            
-            '$top': self.page_size
-        }
-
-        if next_page_token:
-            params.update(next_page_token)
-
-        return params
