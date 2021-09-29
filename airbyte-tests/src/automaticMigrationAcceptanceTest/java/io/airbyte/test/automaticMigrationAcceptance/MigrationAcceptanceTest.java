@@ -1,25 +1,5 @@
 /*
- * MIT License
- *
- * Copyright (c) 2020 Airbyte
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * Copyright (c) 2021 Airbyte, Inc., all rights reserved.
  */
 
 package io.airbyte.test.automaticMigrationAcceptance;
@@ -61,7 +41,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.function.Consumer;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,11 +57,7 @@ public class MigrationAcceptanceTest {
   // assume env file is one directory level up from airbyte-tests.
   private final static File ENV_FILE = Path.of(System.getProperty("user.dir")).getParent().resolve(".env").toFile();
 
-  /**
-   * This test is deprecated because it no longer works after the introduce of the Flyway migration.
-   */
   @Test
-  @Disabled
   public void testAutomaticMigration() throws Exception {
     // default to version in env file but can override it.
     final String targetVersion;
@@ -102,7 +77,6 @@ public class MigrationAcceptanceTest {
   private Consumer<String> logConsumerForServer(Set<String> expectedLogs) {
     return logLine -> expectedLogs.removeIf(entry -> {
       if (logLine.contains("Migrating from version")) {
-        System.out.println("logLine = " + logLine);
         System.out.println("logLine = " + logLine);
       }
       return logLine.contains(entry);
