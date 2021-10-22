@@ -33,11 +33,11 @@ public class MySqlSourceAcceptanceTest extends SourceAcceptanceTest {
   private static final String STREAM_NAME = "id_and_name";
   private static final String STREAM_NAME2 = "public.starships";
 
-  private MySQLContainer<?> container;
-  private JsonNode config;
+  protected MySQLContainer<?> container;
+  protected JsonNode config;
 
   @Override
-  protected void setupEnvironment(TestDestinationEnv environment) throws Exception {
+  protected void setupEnvironment(final TestDestinationEnv environment) throws Exception {
     container = new MySQLContainer<>("mysql:8.0");
     container.start();
 
@@ -72,7 +72,7 @@ public class MySqlSourceAcceptanceTest extends SourceAcceptanceTest {
   }
 
   @Override
-  protected void tearDown(TestDestinationEnv testEnv) {
+  protected void tearDown(final TestDestinationEnv testEnv) {
     container.close();
   }
 

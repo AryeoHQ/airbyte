@@ -5,9 +5,12 @@
 package io.airbyte.workers;
 
 import io.airbyte.config.Configs;
+import io.airbyte.config.Configs.WorkerEnvironment;
 import io.airbyte.config.EnvConfigs;
 import io.airbyte.config.MaxWorkersConfig;
 import io.airbyte.config.helpers.LogClientSingleton;
+import io.airbyte.config.persistence.split_secrets.SecretPersistence;
+import io.airbyte.config.persistence.split_secrets.SecretsHydrator;
 import io.airbyte.workers.process.DockerProcessFactory;
 import io.airbyte.workers.process.KubeProcessFactory;
 import io.airbyte.workers.process.ProcessFactory;
@@ -43,27 +46,36 @@ public class WorkerApp {
 
   private final Path workspaceRoot;
   private final ProcessFactory processFactory;
+  private final SecretsHydrator secretsHydrator;
   private final WorkflowServiceStubs temporalService;
   private final MaxWorkersConfig maxWorkers;
+  private final WorkerEnvironment workerEnvironment;
+  private final String airbyteVersion;
 
-  public WorkerApp(Path workspaceRoot,
-                   ProcessFactory processFactory,
-                   WorkflowServiceStubs temporalService,
-                   MaxWorkersConfig maxWorkers) {
+  public WorkerApp(final Path workspaceRoot,
+                   final ProcessFactory processFactory,
+                   final SecretsHydrator secretsHydrator,
+                   final WorkflowServiceStubs temporalService,
+                   final MaxWorkersConfig maxWorkers,
+                   final WorkerEnvironment workerEnvironment,
+                   final String airbyteVersion) {
     this.workspaceRoot = workspaceRoot;
     this.processFactory = processFactory;
+    this.secretsHydrator = secretsHydrator;
     this.temporalService = temporalService;
     this.maxWorkers = maxWorkers;
+    this.workerEnvironment = workerEnvironment;
+    this.airbyteVersion = airbyteVersion;
   }
 
   public void start() {
-    Map<String, String> mdc = MDC.getCopyOfContextMap();
+    final Map<String, String> mdc = MDC.getCopyOfContextMap();
     Executors.newSingleThreadExecutor().submit(
         () -> {
           MDC.setContextMap(mdc);
           try {
             new WorkerHeartbeatServer(KUBE_HEARTBEAT_PORT).start();
-          } catch (Exception e) {
+          } catch (final Exception e) {
             throw new RuntimeException(e);
           }
         });
@@ -77,30 +89,31 @@ public class WorkerApp {
     final Worker checkConnectionWorker =
         factory.newWorker(TemporalJobType.CHECK_CONNECTION.name(), getWorkerOptions(maxWorkers.getMaxCheckWorkers()));
     checkConnectionWorker.registerWorkflowImplementationTypes(CheckConnectionWorkflow.WorkflowImpl.class);
-    checkConnectionWorker.registerActivitiesImplementations(new CheckConnectionWorkflow.CheckConnectionActivityImpl(processFactory, workspaceRoot));
+    checkConnectionWorker
+        .registerActivitiesImplementations(new CheckConnectionWorkflow.CheckConnectionActivityImpl(processFactory, secretsHydrator, workspaceRoot));
 
     final Worker discoverWorker = factory.newWorker(TemporalJobType.DISCOVER_SCHEMA.name(), getWorkerOptions(maxWorkers.getMaxDiscoverWorkers()));
     discoverWorker.registerWorkflowImplementationTypes(DiscoverCatalogWorkflow.WorkflowImpl.class);
-    discoverWorker.registerActivitiesImplementations(new DiscoverCatalogWorkflow.DiscoverCatalogActivityImpl(processFactory, workspaceRoot));
+    discoverWorker
+        .registerActivitiesImplementations(new DiscoverCatalogWorkflow.DiscoverCatalogActivityImpl(processFactory, secretsHydrator, workspaceRoot));
 
     final Worker syncWorker = factory.newWorker(TemporalJobType.SYNC.name(), getWorkerOptions(maxWorkers.getMaxSyncWorkers()));
     syncWorker.registerWorkflowImplementationTypes(SyncWorkflow.WorkflowImpl.class);
     syncWorker.registerActivitiesImplementations(
-        new SyncWorkflow.ReplicationActivityImpl(processFactory, workspaceRoot),
-        new SyncWorkflow.NormalizationActivityImpl(processFactory, workspaceRoot),
-        new SyncWorkflow.DbtTransformationActivityImpl(processFactory, workspaceRoot));
-
+        new SyncWorkflow.ReplicationActivityImpl(processFactory, secretsHydrator, workspaceRoot),
+        new SyncWorkflow.NormalizationActivityImpl(processFactory, secretsHydrator, workspaceRoot, workerEnvironment, airbyteVersion),
+        new SyncWorkflow.DbtTransformationActivityImpl(processFactory, secretsHydrator, workspaceRoot, airbyteVersion));
     factory.start();
   }
 
-  private static ProcessFactory getProcessBuilderFactory(Configs configs) throws IOException {
+  private static ProcessFactory getProcessBuilderFactory(final Configs configs) throws IOException {
     if (configs.getWorkerEnvironment() == Configs.WorkerEnvironment.KUBERNETES) {
       final ApiClient officialClient = Config.defaultClient();
       final KubernetesClient fabricClient = new DefaultKubernetesClient();
       final String localIp = InetAddress.getLocalHost().getHostAddress();
       final String kubeHeartbeatUrl = localIp + ":" + KUBE_HEARTBEAT_PORT;
       LOGGER.info("Using Kubernetes namespace: {}", configs.getKubeNamespace());
-      return new KubeProcessFactory(configs.getKubeNamespace(), officialClient, fabricClient, kubeHeartbeatUrl);
+      return new KubeProcessFactory(configs.getKubeNamespace(), officialClient, fabricClient, kubeHeartbeatUrl, configs.getTemporalWorkerPorts());
     } else {
       return new DockerProcessFactory(
           configs.getWorkspaceRoot(),
@@ -110,13 +123,13 @@ public class WorkerApp {
     }
   }
 
-  private static final WorkerOptions getWorkerOptions(int max) {
+  private static WorkerOptions getWorkerOptions(final int max) {
     return WorkerOptions.newBuilder()
         .setMaxConcurrentActivityExecutionSize(max)
         .build();
   }
 
-  public static void main(String[] args) throws IOException, InterruptedException {
+  public static void main(final String[] args) throws IOException, InterruptedException {
     final Configs configs = new EnvConfigs();
 
     LogClientSingleton.setWorkspaceMdc(LogClientSingleton.getSchedulerLogsRoot(configs));
@@ -127,11 +140,20 @@ public class WorkerApp {
     final String temporalHost = configs.getTemporalHost();
     LOGGER.info("temporalHost = " + temporalHost);
 
+    final SecretsHydrator secretsHydrator = SecretPersistence.getSecretsHydrator(configs);
+
     final ProcessFactory processFactory = getProcessBuilderFactory(configs);
 
     final WorkflowServiceStubs temporalService = TemporalUtils.createTemporalService(temporalHost);
 
-    new WorkerApp(workspaceRoot, processFactory, temporalService, configs.getMaxWorkers()).start();
+    new WorkerApp(
+        workspaceRoot,
+        processFactory,
+        secretsHydrator,
+        temporalService,
+        configs.getMaxWorkers(),
+        configs.getWorkerEnvironment(),
+        configs.getAirbyteVersion()).start();
   }
 
 }

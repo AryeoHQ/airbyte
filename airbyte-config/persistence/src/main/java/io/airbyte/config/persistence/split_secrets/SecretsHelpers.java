@@ -26,7 +26,7 @@ import javax.annotation.Nullable;
  * These are the three main helpers provided by this class:
  * {@link SecretsHelpers#splitConfig(UUID, JsonNode, ConnectorSpecification)}
  * {@link SecretsHelpers#splitAndUpdateConfig(UUID, JsonNode, JsonNode, ConnectorSpecification, ReadOnlySecretPersistence)}
- * {@link SecretsHelpers#combineConfig(JsonNode, SecretPersistence)}
+ * {@link SecretsHelpers#combineConfig(JsonNode, ReadOnlySecretPersistence)}
  *
  * Here's an overview on some terminology used in this class:
  *
@@ -99,7 +99,7 @@ public class SecretsHelpers {
    * @param secretPersistence secret storage mechanism
    * @return full config including actual secret values
    */
-  public static JsonNode combineConfig(final JsonNode partialConfig, final SecretPersistence secretPersistence) {
+  public static JsonNode combineConfig(final JsonNode partialConfig, final ReadOnlySecretPersistence secretPersistence) {
     final var config = partialConfig.deepCopy();
 
     // if the entire config is a secret coordinate object
@@ -273,7 +273,7 @@ public class SecretsHelpers {
    * @param spec connector specification or a sub-node of the specification
    * @return a type used to process a config or sub-node of a config
    */
-  private static JsonSchemaSpecType getSpecTypeToHandle(JsonNode spec) {
+  private static JsonSchemaSpecType getSpecTypeToHandle(final JsonNode spec) {
     if (isObjectSchema(spec)) {
       return JsonSchemaSpecType.OBJECT;
     } else if (isArraySchema(spec)) {
@@ -299,16 +299,16 @@ public class SecretsHelpers {
 
   }
 
-  private static boolean isStringSchema(JsonNode schema) {
+  private static boolean isStringSchema(final JsonNode schema) {
     return schema.has("type") && schema.get("type").asText().equals("string");
   }
 
-  private static boolean isObjectSchema(JsonNode schema) {
-    return schema.has("type") && schema.get("type").asText().equals("object") && schema.has("properties");
+  private static boolean isObjectSchema(final JsonNode schema) {
+    return schema.has("properties") && schema.get("properties").isObject();
   }
 
-  private static boolean isArraySchema(JsonNode schema) {
-    return schema.has("type") && schema.get("type").asText().equals("array") && schema.has("items");
+  private static boolean isArraySchema(final JsonNode schema) {
+    return schema.has("items") && schema.get("items").isObject();
   }
 
   private static JsonNode getFieldOrEmptyNode(final JsonNode node, final String field) {
@@ -328,7 +328,7 @@ public class SecretsHelpers {
    * @throws RuntimeException when a secret at that coordinate is not available in the persistence
    * @return a json text node containing the secret value
    */
-  private static TextNode getOrThrowSecretValueNode(final SecretPersistence secretPersistence, final SecretCoordinate coordinate) {
+  private static TextNode getOrThrowSecretValueNode(final ReadOnlySecretPersistence secretPersistence, final SecretCoordinate coordinate) {
     final var secretValue = secretPersistence.read(coordinate);
 
     if (secretValue.isEmpty()) {
@@ -338,7 +338,7 @@ public class SecretsHelpers {
     return new TextNode(secretValue.get());
   }
 
-  private static SecretCoordinate getCoordinateFromTextNode(JsonNode node) {
+  private static SecretCoordinate getCoordinateFromTextNode(final JsonNode node) {
     return SecretCoordinate.fromFullCoordinate(node.asText());
   }
 
@@ -373,7 +373,7 @@ public class SecretsHelpers {
     Long version = null;
 
     if (oldSecretFullCoordinate != null) {
-      var oldCoordinate = SecretCoordinate.fromFullCoordinate(oldSecretFullCoordinate);
+      final var oldCoordinate = SecretCoordinate.fromFullCoordinate(oldSecretFullCoordinate);
       coordinateBase = oldCoordinate.getCoordinateBase();
       final var oldSecretValue = secretReader.read(oldCoordinate);
       if (oldSecretValue.isPresent()) {

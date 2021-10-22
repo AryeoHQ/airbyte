@@ -25,20 +25,20 @@ public class ConfigurationUpdate {
   private final SpecFetcher specFetcher;
   private final JsonSecretsProcessor secretsProcessor;
 
-  public ConfigurationUpdate(ConfigRepository configRepository, SpecFetcher specFetcher) {
+  public ConfigurationUpdate(final ConfigRepository configRepository, final SpecFetcher specFetcher) {
     this(configRepository, specFetcher, new JsonSecretsProcessor());
   }
 
-  public ConfigurationUpdate(ConfigRepository configRepository, SpecFetcher specFetcher, JsonSecretsProcessor secretsProcessor) {
+  public ConfigurationUpdate(final ConfigRepository configRepository, final SpecFetcher specFetcher, final JsonSecretsProcessor secretsProcessor) {
     this.configRepository = configRepository;
     this.specFetcher = specFetcher;
     this.secretsProcessor = secretsProcessor;
   }
 
-  public SourceConnection source(UUID sourceId, String sourceName, JsonNode newConfiguration)
+  public SourceConnection source(final UUID sourceId, final String sourceName, final JsonNode newConfiguration)
       throws ConfigNotFoundException, IOException, JsonValidationException {
     // get existing source
-    final SourceConnection persistedSource = configRepository.getSourceConnection(sourceId);
+    final SourceConnection persistedSource = configRepository.getSourceConnectionWithSecrets(sourceId);
     persistedSource.setName(sourceName);
     // get spec
     final StandardSourceDefinition sourceDefinition = configRepository.getStandardSourceDefinition(persistedSource.getSourceDefinitionId());
@@ -53,10 +53,10 @@ public class ConfigurationUpdate {
     return Jsons.clone(persistedSource).withConfiguration(updatedConfiguration);
   }
 
-  public DestinationConnection destination(UUID destinationId, String destName, JsonNode newConfiguration)
+  public DestinationConnection destination(final UUID destinationId, final String destName, final JsonNode newConfiguration)
       throws ConfigNotFoundException, IOException, JsonValidationException {
     // get existing destination
-    final DestinationConnection persistedDestination = configRepository.getDestinationConnection(destinationId);
+    final DestinationConnection persistedDestination = configRepository.getDestinationConnectionWithSecrets(destinationId);
     persistedDestination.setName(destName);
     // get spec
     final StandardDestinationDefinition destinationDefinition = configRepository
